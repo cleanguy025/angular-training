@@ -35,3 +35,8 @@ export function createParamSearch(param: Partial<ParamSearch>): ParamSearch {
     ...param
   } as ParamSearch;
 }
+
+export type AccountsResponse = {
+  rows: Account[];
+  total: number
+}

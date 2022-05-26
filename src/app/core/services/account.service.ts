@@ -1,6 +1,6 @@
 import {HttpBackend, HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {map, filter, catchError} from 'rxjs/operators';
+import {map, filter, catchError, delay, timeout, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Account, ParamSearch} from '../model/account.model';
 
@@ -22,7 +22,7 @@ export class AccountService {
     params = params.append('address', param.address ? param.address.toString() : '');
     return this.http.get<Account[]>('/accounts', {
       params
-    });
+    })
   }
 
   addAccount(acc: Account): Observable<any> {

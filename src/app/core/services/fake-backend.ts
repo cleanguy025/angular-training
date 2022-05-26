@@ -127,9 +127,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return ok([]);
       }
       if (rs.length <= paramSearch.limit + paramSearch.start) {
-        return ok([...rs].slice(paramSearch.start, rs.length));
+        return ok({
+                    rows: [...rs].slice(paramSearch.start, rs.length),
+                    total: rs.length
+                  });
       } else {
-        return ok([...rs].slice(paramSearch.start, paramSearch.start + paramSearch.limit));
+        return ok({
+                    rows: [...rs].slice(paramSearch.start, paramSearch.start + paramSearch.limit),
+                    total: rs.length
+                  });
       }
     }
 
@@ -269,10 +275,3 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
   }
 }
-
-export const fakeBackendProvider = {
-  // use fake backend in place of Http service for backend-less development
-  provide: HTTP_INTERCEPTORS,
-  useClass: FakeBackendInterceptor,
-  multi: true,
-};
